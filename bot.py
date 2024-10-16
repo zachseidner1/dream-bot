@@ -37,6 +37,8 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    print(f"received message {message}")  # TODO fix
+    await message.channel.send("I am losing my sanity")
     # Ignore messages from the bot itself
     if message.author == client.user:
         return
