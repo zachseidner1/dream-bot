@@ -26,12 +26,7 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 # Jungian dream analysis template
-JUNGIAN_ANALYSIS_PROMPT = """
-You are a Jungian psychologist. A person will share their dream with you.
-
-Provide a concise but impactful analysis of the dream. The analysis should reveal things about the user that they may not initially expect.
-Remember to make the analysis concise, but impactful. Concision is important though. 
-"""
+JUNGIAN_ANALYSIS_PROMPT = os.getenv('ANALYSIS_PROMPT')
 
 
 @client.event
