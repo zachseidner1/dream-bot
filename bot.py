@@ -42,9 +42,10 @@ async def on_message(message):
     if message.channel.name != "dreams":
         return
 
-        # Check if the message contains a dream
+    # Check if the message contains a dream
     if "dream" in message.content.lower() and check_dream(message.content, openai_client):
         dream_text = message.content
+        dream_author = message.author
 
         # Call OpenAI's GPT API to analyze the dream
         try:
@@ -64,7 +65,7 @@ async def on_message(message):
                         "content": [
                             {
                                 "type": "text",
-                                "text": dream_text
+                                "text": f"Author: \n```\n{dream_author}```\n Text:\n```\n{dream_text}\n```"
                             }
                         ]
                     }
