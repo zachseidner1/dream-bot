@@ -5,6 +5,8 @@ import openai
 from dotenv import load_dotenv
 from openai import OpenAI
 
+from DreamCheck import check_dream
+
 load_dotenv()
 
 # Load environment variables (you can also hardcode these for testing purposes)
@@ -39,16 +41,14 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    print(f"received message {message}")
     # Ignore messages from the bot itself
     if message.author == client.user:
         return
     if message.channel.name != "dreams":
-        print(f"channel name is {message.channel.name}")
         return
 
         # Check if the message contains a dream
-    if "dream" in message.content.lower():
+    if "dream" in message.content.lower() and check_dream(message.content, openai_client):
         dream_text = message.content
 
         # Call OpenAI's GPT API to analyze the dream
@@ -86,10 +86,7 @@ async def on_message(message):
         except Exception as e:
             await message.channel.send("Sorry, something went wrong with the dream analysis.")
             print(f"Error: {e}")
-    else:
-        print(f"message lower: {message.content.lower()}")
-
-    # Start the bot
 
 
+# Start the bot
 client.run(DISCORD_TOKEN)
